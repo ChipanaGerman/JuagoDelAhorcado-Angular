@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WordService } from '../services/word';
 
 @Component({
-  selector: 'app-game',
+  selector: 'app-game', 
   standalone: true,
   imports: [CommonModule],
   templateUrl: './game.html',
