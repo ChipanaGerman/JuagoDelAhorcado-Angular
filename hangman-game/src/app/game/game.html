@@ -1,0 +1,46 @@
+<div class="game-container">
+
+  <header class="game-header">
+    <h1>JUEGO DEL AHORCADO <span class="neon-x"> </span></h1>
+    <p class="attempts">VIDAS: {{ maxAttempts - attempts }} / {{ maxAttempts }}</p>
+  </header>
+
+  <main class="game-area">
+    <div class="hangman-figure">
+      <img [src]="'assets/img/ahorcado-' + attempts + '.png'" alt="Ahorcado">
+    </div>
+
+    <div class="hidden-word">
+      @for (char of hiddenWord; track $index) {
+        <span class="char-slot">{{ char }}</span>
+      }
+    </div>
+  </main>
+  
+  @if (gameStatus === 'playing') {
+    <div class="keyboard">
+      @for (letter of letters; track letter) {
+        <button 
+          (click)="checkLetter(letter)"
+          [disabled]="usedLetters.has(letter)">
+          {{ letter }}
+        </button>
+      }
+    </div>
+  }
+
+  @if (gameStatus !== 'playing') {
+    <div class="modal-overlay">
+      <div class="modal-content" [ngClass]="{'modal-win': gameStatus === 'won', 'modal-lose': gameStatus === 'lost'}">
+        @if (gameStatus === 'won') {
+          <h2 class="title-win">¡VICTORIA!</h2>
+          <p>Descifraste la palabra. Tienes auraa.</p>
+        } @else {
+          <h2 class="title-lose">DERROTA</h2>
+          <p>La palabra era: <span class="final-word">{{ wordToGuess }}</span></p>
+        }
+        <button class="btn-restart" (click)="startGame()"><span>JUGAR OTRA VEZ</span></button>
+      </div>
+    </div>
+  }
+</div>
